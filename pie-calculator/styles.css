@@ -456,20 +456,18 @@ html, body {
 .result-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  margin-top: 1px;
+  gap: 0 32px;
+  margin-top: 32px;
 }
 .result-cell {
-  background: var(--bg);
-  padding: 24px 4px 8px;
+  padding: 0 0 24px;
 }
 .result-cell .k {
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-mute);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .result-cell .v {
   font-family: var(--serif);
@@ -536,7 +534,7 @@ html, body {
 }
 .stack-legend {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 12px;
   margin-top: 16px;
 }
@@ -666,25 +664,47 @@ html, body {
 }
 
 /* How it works */
-.hiw-section { padding-top: 80px; padding-bottom: 80px; border-top: 1px solid var(--line); }
-
-.hiw-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 20px;
+.hiw-section {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+  position: relative;
   overflow: hidden;
-  margin-top: 48px;
+}
+.hiw-section::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 2;
 }
 
+.hiw-label {
+  padding: 0 64px;
+  margin-bottom: 36px;
+}
+
+.hiw-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 0 64px 4px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.hiw-scroll::-webkit-scrollbar { display: none; }
+
 .hiw-card {
+  flex: 0 0 320px;
   background: var(--bg);
-  padding: 40px 36px 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  padding: 40px 32px 44px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  scroll-snap-align: start;
   transition: background .25s ease;
 }
 .hiw-card:hover { background: var(--surface-hi); }
@@ -723,7 +743,6 @@ html, body {
   .hero-meta { right: 32px; }
   .footer { padding-left: 32px; padding-right: 32px; }
   .footer-wordmark { font-size: 32vw; }
-  .hiw-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -737,7 +756,14 @@ html, body {
   }
   .hero-vignette {
     background:
-      linear-gradient(180deg, rgba(13,13,13,0.4) 0%, rgba(13,13,13,0.1) 18%, rgba(13,13,13,0.2) 32%, rgba(13,13,13,0.85) 55%, rgba(13,13,13,1) 75%);
+      linear-gradient(180deg,
+        rgba(13,13,13,1)    0%,
+        rgba(13,13,13,0.95) 6%,
+        rgba(13,13,13,0.6)  18%,
+        rgba(13,13,13,0.1)  30%,
+        rgba(13,13,13,0)    36%,
+        rgba(13,13,13,0.7)  58%,
+        rgba(13,13,13,1)    76%);
   }
   .hero-body { padding: 0 20px 48px; }
   .hero-headline { font-size: clamp(48px, 13vw, 80px); max-width: 100%; }
@@ -766,7 +792,7 @@ html, body {
   }
   #tabs-root { margin-top: 0; padding-top: 20px; padding-bottom: 8px; }
   .tabs { width: 100%; justify-content: space-between; }
-  .tab { padding: 10px 14px; font-size: 12px; flex: 1; text-align: center; }
+  .tab { padding: 10px 8px; font-size: 11px; flex: 1; text-align: center; letter-spacing: 0.01em; }
 
   .card { padding: 20px; border-radius: 16px; }
   .panel-head {
@@ -794,9 +820,9 @@ html, body {
   .result-hero { padding: 24px 0 24px; }
   .result-hero .number { font-size: clamp(44px, 12vw, 64px); }
   .result-hero .sub { font-size: 13px; }
-  .result-grid { grid-template-columns: 1fr; }
-  .result-cell { padding: 20px 0 8px; border-top: 1px solid var(--line); }
-  .result-cell:first-child { border-top: none; }
+  .result-grid { grid-template-columns: 1fr; gap: 0; margin-top: 20px; }
+  .result-cell { padding: 16px 0; border-top: 1px solid var(--line); }
+  .result-cell:first-child { border-top: none; padding-top: 0; }
   .result-cell .v { font-size: 24px; }
 
   .radial-wrap { flex-direction: column; align-items: flex-start; gap: 20px; }
@@ -810,8 +836,10 @@ html, body {
 
   .chart-legend { gap: 14px; font-size: 10px; flex-wrap: wrap; }
 
-  .hiw-section { padding-top: 60px; padding-bottom: 60px; }
-  .hiw-card { padding: 28px 24px 32px; }
+  .hiw-section { padding: 60px 0; }
+  .hiw-label { padding: 0 20px; margin-bottom: 28px; }
+  .hiw-scroll { padding: 0 20px 4px; gap: 12px; }
+  .hiw-card { flex: 0 0 280px; padding: 28px 22px 32px; }
   .hiw-title { font-size: 22px; }
   .footer { padding: 60px 20px 0; }
   .footer-top { padding-bottom: 40px; font-size: 11px; }
@@ -823,7 +851,7 @@ html, body {
 }
 
 @media (max-width: 420px) {
-  .tab { padding: 8px 8px; font-size: 11px; letter-spacing: 0.01em; }
+  .tab { padding: 8px 4px; font-size: 10px; letter-spacing: 0; }
   .hero-headline { font-size: 44px; }
   .result-hero .number { font-size: 44px; }
 }
