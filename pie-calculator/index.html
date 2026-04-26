@@ -78,7 +78,7 @@
 
       <div class="hiw-card">
         <div class="hiw-tag">NPS</div>
-        <h3 class="hiw-title">Your government-backed retirement layer</h3>
+        <h3 class="hiw-title">Your pension, backed by the govt.</h3>
         <p class="hiw-body">A pension scheme that locks in contributions until 60, gives you a tax-free lump sum plus a monthly pension for life.</p>
       </div>
 
@@ -223,12 +223,13 @@ function compute(s) {
     basicM *= 1 + s.salaryGrowth / 100;
   }
   var totalEPFInterest = epfCorpus - s.epfBalance - totalEmpContrib - totalErContrib;
+  var epfFinalBasic = basicM; // basicM after last salary increment = final year basic
 
   return { sipCorpus: sipCorpus, totalInvested: totalInvested, stepUpBonus: stepUpBonus,
     existingFV: existingFV, targetCorpus: targetCorpus, annualExpenseAtFire: annualExpenseAtFire,
     nps: nps, requiredSIP: requiredSIP,
     sipCorpusD: sipCorpusD, totalInvestedD: totalInvestedD, stepUpBonusD: stepUpBonusD, existingFVD: existingFVD,
-    epfCorpus: epfCorpus, totalEmpContrib: totalEmpContrib, totalErContrib: totalErContrib, totalEPFInterest: totalEPFInterest };
+    epfCorpus: epfCorpus, totalEmpContrib: totalEmpContrib, totalErContrib: totalErContrib, totalEPFInterest: totalEPFInterest, epfFinalBasic: epfFinalBasic };
 }
 
 /* ------------------------------------------------------------------ */
@@ -596,12 +597,12 @@ function renderEPFResults(el, s, r) {
     + '<div class="result-hero">'
     + '<div class="label">EPF corpus at retirement age ' + s.fireAge + '</div>'
     + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.epfCorpus) + '</div>'
-    + '<div class="sub">Employee contributes 12% of basic; employer puts 3.67% into EPF (8.33% goes to EPS pension). '
-    + 'Interest compounded at 8.25% annually over ' + years + ' years.</div>'
+    + '<div class="sub">Employee contributes 12% of basic; employer puts 3.67% into EPF (8.33% goes to EPS). '
+    + 'Salary grows ' + s.salaryGrowth + '% p.a. — basic reaches ₹' + f.formatINR(r.epfFinalBasic) + '/mo by retirement, so contributions scale up each year.</div>'
     + '</div>'
     + '<div class="result-grid">'
-    + '<div class="result-cell"><div class="k">Your contribution</div><div class="v">₹' + f.formatINR(r.totalEmpContrib) + '</div><div class="d">12% of basic</div></div>'
-    + '<div class="result-cell"><div class="k">Employer contribution</div><div class="v">₹' + f.formatINR(r.totalErContrib) + '</div><div class="d">3.67% of basic</div></div>'
+    + '<div class="result-cell"><div class="k">Your contribution</div><div class="v">₹' + f.formatINR(r.totalEmpContrib) + '</div><div class="d">12% of basic, growing</div></div>'
+    + '<div class="result-cell"><div class="k">Employer contribution</div><div class="v">₹' + f.formatINR(r.totalErContrib) + '</div><div class="d">3.67% of basic, growing</div></div>'
     + '<div class="result-cell"><div class="k">Interest earned</div><div class="v">₹' + f.formatINR(r.totalEPFInterest) + '</div><div class="d">At 8.25% p.a.</div></div>'
     + '</div>'
     + '<div style="padding:28px 0 4px">'
