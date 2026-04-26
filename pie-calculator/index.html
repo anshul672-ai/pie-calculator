@@ -82,6 +82,12 @@
         <p class="hiw-body">A pension scheme that locks in contributions until 60, gives you a tax-free lump sum plus a monthly pension for life.</p>
       </div>
 
+      <div class="hiw-card">
+        <div class="hiw-tag">EPS</div>
+        <h3 class="hiw-title">Your salary-linked pension</h3>
+        <p class="hiw-body">A slice of your employer's EPF contribution builds a government pension for life. Small monthly, but guaranteed.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -153,7 +159,8 @@ var DEFAULTS = {
   age: 30, fireAge: 50, monthlyExpense: 80000,
   inflation: 6, returnRate: 12,
   sip: 40000, stepUp: 10, existing: 1500000, sipDuration: 20,
-  nps: 6000, npsEquity: 75, annuityRate: 6
+  nps: 6000, npsEquity: 75, annuityRate: 6,
+  epfBalance: 0, basicSalary: 50000, salaryGrowth: 8
 };
 
 var state;
@@ -200,10 +207,28 @@ function compute(s) {
   var flatSIPD = f.fvMonthlySIP(s.sip, s.returnRate / 100, sipYears);
   var stepUpBonusD = sipCorpusD - flatSIPD;
 
+  // EPF computation: employee 12% + employer 3.67% of basic, 8.25% interest compounded monthly
+  var epfYears = Math.max(1, s.fireAge - s.age);
+  var epfCorpus = s.epfBalance, basicM = s.basicSalary;
+  var totalEmpContrib = 0, totalErContrib = 0;
+  var epfMR = 0.0825 / 12;
+  for (var ey = 0; ey < epfYears; ey++) {
+    for (var emo = 0; emo < 12; emo++) {
+      var empC = basicM * 0.12;
+      var erC = basicM * 0.0367;
+      epfCorpus = (epfCorpus + empC + erC) * (1 + epfMR);
+      totalEmpContrib += empC;
+      totalErContrib += erC;
+    }
+    basicM *= 1 + s.salaryGrowth / 100;
+  }
+  var totalEPFInterest = epfCorpus - s.epfBalance - totalEmpContrib - totalErContrib;
+
   return { sipCorpus: sipCorpus, totalInvested: totalInvested, stepUpBonus: stepUpBonus,
     existingFV: existingFV, targetCorpus: targetCorpus, annualExpenseAtFire: annualExpenseAtFire,
     nps: nps, requiredSIP: requiredSIP,
-    sipCorpusD: sipCorpusD, totalInvestedD: totalInvestedD, stepUpBonusD: stepUpBonusD, existingFVD: existingFVD };
+    sipCorpusD: sipCorpusD, totalInvestedD: totalInvestedD, stepUpBonusD: stepUpBonusD, existingFVD: existingFVD,
+    epfCorpus: epfCorpus, totalEmpContrib: totalEmpContrib, totalErContrib: totalErContrib, totalEPFInterest: totalEPFInterest };
 }
 
 /* ------------------------------------------------------------------ */
@@ -564,9 +589,34 @@ function renderNPSResults(el, s, r) {
     + '</div>';
 }
 
+function renderEPFResults(el, s, r) {
+  var f = window.PieFmt;
+  var years = Math.max(1, s.fireAge - s.age);
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">EPF corpus at retirement age ' + s.fireAge + '</div>'
+    + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.epfCorpus) + '</div>'
+    + '<div class="sub">Employee contributes 12% of basic; employer puts 3.67% into EPF (8.33% goes to EPS pension). '
+    + 'Interest compounded at 8.25% annually over ' + years + ' years.</div>'
+    + '</div>'
+    + '<div class="result-grid">'
+    + '<div class="result-cell"><div class="k">Your contribution</div><div class="v">₹' + f.formatINR(r.totalEmpContrib) + '</div><div class="d">12% of basic</div></div>'
+    + '<div class="result-cell"><div class="k">Employer contribution</div><div class="v">₹' + f.formatINR(r.totalErContrib) + '</div><div class="d">3.67% of basic</div></div>'
+    + '<div class="result-cell"><div class="k">Interest earned</div><div class="v">₹' + f.formatINR(r.totalEPFInterest) + '</div><div class="d">At 8.25% p.a.</div></div>'
+    + '</div>'
+    + '<div style="padding:28px 0 4px">'
+    + '<div class="eyebrow" style="margin-bottom:14px">Contribution vs. growth</div>'
+    + stackHTML(r.epfCorpus, [
+        { label: 'Employee', val: r.totalEmpContrib + s.epfBalance, color: '#5C8A7A' },
+        { label: 'Employer', val: r.totalErContrib, color: '#3D6B5C' },
+        { label: 'Interest', val: Math.max(0, r.totalEPFInterest), color: '#D4A574' }
+      ], false)
+    + '</div>';
+}
+
 function renderCombinedResults(el, s, r) {
   var f = window.PieFmt;
-  var total = r.sipCorpus + r.existingFV + r.nps.lumpsum;
+  var total = r.sipCorpus + r.existingFV + r.nps.lumpsum + r.epfCorpus;
   var gap = Math.max(0, r.targetCorpus - total);
   var pct = Math.min(100, (total / r.targetCorpus) * 100);
   var surplus = total - r.targetCorpus;
@@ -600,7 +650,8 @@ function renderCombinedResults(el, s, r) {
     + '<div class="eyebrow" style="margin-bottom:14px">How you get there</div>'
     + stackHTML(Math.max(r.targetCorpus, 1), [
         { label: 'SIP', val: r.sipCorpus + r.existingFV, color: '#D4A574' },
-        { label: 'NPS', val: r.nps.lumpsum, color: '#6B4F32' }
+        { label: 'NPS', val: r.nps.lumpsum, color: '#6B4F32' },
+        { label: 'EPF', val: r.epfCorpus, color: '#5C8A7A' }
       ].concat(gap > 0 ? [{ label: 'Gap', val: gap, color: 'rgba(245,240,232,0.08)' }] : []), true)
     + '</div>'
     + '<div style="padding:28px 0 0;border-top:1px solid var(--line);margin-top:24px">'
@@ -682,6 +733,15 @@ function buildLeftPanel(tab) {
     leftCard.appendChild(yrsEl);
   }
 
+  if (tab === 'epf') {
+    head('EPF contribution', '8.25% p.a.');
+    addSlider('age',          { label: 'Current age',             help: 'Synced with FIRE tab',           value: state.age,          min: 22,  max: 55,       step: 1,     format: function(v) { return v; },            suffix: 'yrs', ticks: ['22','30','40','55'] });
+    addSlider('fireAge',      { label: 'Retirement age',          help: 'When contributions stop',        value: state.fireAge,      min: 30,  max: 70,       step: 1,     format: function(v) { return v; },            suffix: 'yrs' });
+    addSlider('epfBalance',   { label: 'Current EPF balance',     help: 'Check your UAN passbook',        value: state.epfBalance,   min: 0,   max: 5000000,  step: 10000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('basicSalary',  { label: 'Monthly basic salary',    help: 'EPF is calculated on basic pay', value: state.basicSalary,  min: 10000, max: 500000, step: 1000,  format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('salaryGrowth', { label: 'Annual salary growth',    help: 'Expected increment each year',   value: state.salaryGrowth, min: 0,   max: 15,       step: 0.5,   format: function(v) { return v.toFixed(1); }, suffix: '%' });
+  }
+
   if (tab === 'combined') {
     head('All three together', 'Unified');
     addSlider('age',           { label: 'Current age',            value: state.age,           min: 22,  max: 55,      step: 1,   format: function(v) { return v; },            suffix: 'yrs', ticks: ['22','30','38','55'] });
@@ -699,6 +759,7 @@ function updateResults() {
   if (activeTab === 'fire')     renderFIREResults(rightCard, state, r);
   else if (activeTab === 'sip') renderSIPResults(rightCard, state, r);
   else if (activeTab === 'nps') renderNPSResults(rightCard, state, r);
+  else if (activeTab === 'epf') renderEPFResults(rightCard, state, r);
   else                          renderCombinedResults(rightCard, state, r);
 }
 
@@ -785,7 +846,7 @@ function init() {
   tabsWrap.style.padding = '0 0 24px';
   var tabsEl = document.createElement('div');
   tabsEl.className = 'tabs';
-  [['fire','FIRE'],['sip','SIP'],['nps','NPS'],['combined','Combined']].forEach(function(pair) {
+  [['fire','FIRE'],['sip','SIP'],['nps','NPS'],['epf','EPF'],['combined','Combined']].forEach(function(pair) {
     var btn = document.createElement('button');
     btn.className = 'tab' + (pair[0] === activeTab ? ' active' : '');
     btn.dataset.tab = pair[0];
