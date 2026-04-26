@@ -59,36 +59,36 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section hiw-section" id="how-it-works">
-  <div class="container">
-    <div class="eyebrow" style="margin-bottom:20px">How it works</div>
-    <div class="hiw-grid">
+<section class="hiw-section" id="how-it-works">
+  <div class="hiw-label">
+    <div class="eyebrow">How it works</div>
+  </div>
+  <div class="hiw-scroll">
 
-      <div class="hiw-card">
-        <div class="hiw-tag">FIRE</div>
-        <h3 class="hiw-title">The number that sets you free</h3>
-        <p class="hiw-body">Your retirement corpus. The amount where your investments generate enough to live on forever, without working.</p>
-      </div>
-
-      <div class="hiw-card">
-        <div class="hiw-tag">SIP</div>
-        <h3 class="hiw-title">Wealth, built monthly</h3>
-        <p class="hiw-body">A fixed amount invested every month in mutual funds. Small, consistent, compounding — the engine that builds your FIRE corpus.</p>
-      </div>
-
-      <div class="hiw-card">
-        <div class="hiw-tag">NPS</div>
-        <h3 class="hiw-title">Your pension, backed by the govt.</h3>
-        <p class="hiw-body">A pension scheme that locks in contributions until 60, gives you a tax-free lump sum plus a monthly pension for life.</p>
-      </div>
-
-      <div class="hiw-card">
-        <div class="hiw-tag">EPS</div>
-        <h3 class="hiw-title">Your salary-linked pension</h3>
-        <p class="hiw-body">A slice of your employer's EPF contribution builds a government pension for life. Small monthly, but guaranteed.</p>
-      </div>
-
+    <div class="hiw-card">
+      <div class="hiw-tag">FIRE</div>
+      <h3 class="hiw-title">The number that sets you free</h3>
+      <p class="hiw-body">Your retirement corpus. The amount where your investments generate enough to live on forever, without working.</p>
     </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">SIP</div>
+      <h3 class="hiw-title">Wealth, built monthly</h3>
+      <p class="hiw-body">A fixed amount invested every month in mutual funds. Small, consistent, compounding — the engine that builds your FIRE corpus.</p>
+    </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">NPS</div>
+      <h3 class="hiw-title">Your pension, backed by the govt.</h3>
+      <p class="hiw-body">A pension scheme that locks in contributions until 60, gives you a tax-free lump sum plus a monthly pension for life.</p>
+    </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">EPS</div>
+      <h3 class="hiw-title">Your salary-linked pension</h3>
+      <p class="hiw-body">A slice of your employer's EPF contribution builds a government pension for life. Small monthly, but guaranteed.</p>
+    </div>
+
   </div>
 </section>
 
@@ -597,8 +597,8 @@ function renderEPFResults(el, s, r) {
     + '<div class="result-hero">'
     + '<div class="label">EPF corpus at retirement age ' + s.fireAge + '</div>'
     + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.epfCorpus) + '</div>'
-    + '<div class="sub">Employee contributes 12% of basic; employer puts 3.67% into EPF (8.33% goes to EPS). '
-    + 'Salary grows ' + s.salaryGrowth + '% p.a. — basic reaches ₹' + f.formatINR(r.epfFinalBasic) + '/mo by retirement, so contributions scale up each year.</div>'
+    + '<div class="sub">Employee 12% + employer 3.67% of basic, compounded monthly at 8.25%. '
+    + 'With ' + s.salaryGrowth.toFixed(1) + '% annual step-up, basic grows from ₹' + f.formatINR(s.basicSalary) + ' to ₹' + f.formatINR(r.epfFinalBasic) + '/mo — and EPF contributions grow with it every year.</div>'
     + '</div>'
     + '<div class="result-grid">'
     + '<div class="result-cell"><div class="k">Your contribution</div><div class="v">₹' + f.formatINR(r.totalEmpContrib) + '</div><div class="d">12% of basic, growing</div></div>'
@@ -740,7 +740,7 @@ function buildLeftPanel(tab) {
     addSlider('fireAge',      { label: 'Retirement age',          help: 'When contributions stop',        value: state.fireAge,      min: 30,  max: 70,       step: 1,     format: function(v) { return v; },            suffix: 'yrs' });
     addSlider('epfBalance',   { label: 'Current EPF balance',     help: 'Check your UAN passbook',        value: state.epfBalance,   min: 0,   max: 5000000,  step: 10000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
     addSlider('basicSalary',  { label: 'Monthly basic salary',    help: 'EPF is calculated on basic pay', value: state.basicSalary,  min: 10000, max: 500000, step: 1000,  format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
-    addSlider('salaryGrowth', { label: 'Annual salary growth',    help: 'Expected increment each year',   value: state.salaryGrowth, min: 0,   max: 15,       step: 0.5,   format: function(v) { return v.toFixed(1); }, suffix: '%' });
+    addSlider('salaryGrowth', { label: 'Annual step-up',          help: 'Basic salary grows by this % each year, lifting EPF contributions proportionally', value: state.salaryGrowth, min: 0, max: 15, step: 0.5, format: function(v) { return v.toFixed(1); }, suffix: '%', ticks: ['0%','5%','10%','15%'] });
   }
 
   if (tab === 'combined') {
