@@ -766,6 +766,9 @@ html, body {
         rgba(13,13,13,1)    76%);
   }
   .hero-body { padding: 0 20px 48px; }
+  .hero-body .eyebrow {
+    text-shadow: 0 1px 12px rgba(0,0,0,0.9), 0 2px 32px rgba(0,0,0,0.8);
+  }
   .hero-headline { font-size: clamp(48px, 13vw, 80px); max-width: 100%; }
   .hero-sub { font-size: 14px; margin-top: 24px; }
   .hero-cta-row { margin-top: 32px; flex-wrap: wrap; }
@@ -837,8 +840,8 @@ html, body {
   .chart-legend { gap: 14px; font-size: 10px; flex-wrap: wrap; }
 
   .hiw-section { padding: 60px 0; }
-  .hiw-label { padding: 0 20px; margin-bottom: 28px; }
-  .hiw-scroll { padding: 0 20px 4px; gap: 12px; }
+  .hiw-label { padding: 0 24px; margin-bottom: 28px; }
+  .hiw-scroll { padding: 0 0 4px 24px; gap: 12px; }
   .hiw-card { flex: 0 0 280px; padding: 28px 22px 32px; }
   .hiw-title { font-size: 22px; }
   .footer { padding: 60px 20px 0; }
