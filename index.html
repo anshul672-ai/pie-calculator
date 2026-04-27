@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pie — Your number. Your freedom.</title>
+<meta property="og:title" content="Pie · Your number. Your freedom." />
+<meta property="og:description" content="One calm interface to model FIRE, SIP and NPS together. Find your retirement number." />
+<meta property="og:image" content="https://pie-calculator-two.vercel.app/og-image.jpg" />
+<meta property="og:url" content="https://pie-calculator-two.vercel.app" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Pie · Your number. Your freedom." />
+<meta name="twitter:description" content="One calm interface to model FIRE, SIP and NPS together. Find your retirement number." />
+<meta name="twitter:image" content="https://pie-calculator-two.vercel.app/og-image.jpg" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230D0D0D'/%3E%3Cpath d='M16 4 A12 12 0 0 1 28 16 L16 16 Z' fill='%23D4A574'/%3E%3Cpath d='M28 16 A12 12 0 0 1 10.4 26.8 L16 16 Z' fill='%236B4F32'/%3E%3Cpath d='M10.4 26.8 A12 12 0 0 1 16 4 L16 16 Z' fill='%23F5F0E8' opacity='0.15'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%230D0D0D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="hero" data-screen-label="01 Hero">
+  <div class="hero-image"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-grain"></div>
+
+  <nav class="nav">
+    <div class="logo">pie<span class="logo-dot"></span></div>
+    <div class="nav-links"></div>
+  </nav>
+
+  <div class="hero-body">
+    <div>
+      <div class="hero-eyebrow-scrim"></div>
+      <div class="eyebrow" style="margin-bottom: 32px; color: var(--gold);">FIRE · SIP · NPS · ALL IN ONE</div>
+      <h1 class="hero-headline">Your number.<br/><em>Your freedom.</em></h1>
+      <p class="hero-sub">
+        One calm interface to model FIRE, your SIPs, and NPS together. No spreadsheets.
+        No guesswork. Just one number — the one that lets you stop trading time for money.
+      </p>
+      <div class="hero-cta-row">
+        <button class="btn btn-primary" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">
+          <span class="cta-long">Calculate your number</span><span class="cta-short">Calculate</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7 3m4 4l-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button class="btn btn-ghost" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">How it works</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <div class="num">₹4.8 Cr</div>
+    median FIRE number<br/>for Indian professionals, 2026
+  </div>
+
+  <div class="scroll-hint"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="hiw-section" id="how-it-works">
+  <div class="hiw-label">
+    <div class="eyebrow">How it works</div>
+  </div>
+  <div class="hiw-scroll">
+
+    <div class="hiw-card">
+      <div class="hiw-tag">FIRE</div>
+      <h3 class="hiw-title">The number that sets you free</h3>
+      <p class="hiw-body">Your retirement corpus. The amount where your investments generate enough to live on forever, without working.</p>
+    </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">SIP</div>
+      <h3 class="hiw-title">Wealth, built monthly</h3>
+      <p class="hiw-body">A fixed amount invested every month in mutual funds. Small, consistent, compounding — the engine that builds your FIRE corpus.</p>
+    </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">NPS</div>
+      <h3 class="hiw-title">Your pension, backed by the govt.</h3>
+      <p class="hiw-body">A pension scheme that locks in contributions until 60, gives you a tax-free lump sum plus a monthly pension for life.</p>
+    </div>
+
+    <div class="hiw-card">
+      <div class="hiw-tag">EPS</div>
+      <h3 class="hiw-title">Your salary-linked pension</h3>
+      <p class="hiw-body">A slice of your employer's EPF contribution builds a government pension for life. Small monthly, but guaranteed.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section" id="calculator" data-screen-label="02 Calculator">
+  <div class="container">
+    <div class="calc-header">
+      <div>
+        <div class="eyebrow">The planner</div>
+        <h2 class="calc-title">Three levers.<br/><em>One trajectory.</em></h2>
+      </div>
+      <div id="tabs-root"></div>
+    </div>
+    <div id="calc-root"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div>© 2026 Pie · Made for Indian professionals</div>
+    <div class="made">made with ♥ by <a href="https://www.linkedin.com/in/anshux/" target="_blank" rel="noopener">anshux</a></div>
+  </div>
+  <h2 class="footer-wordmark">pie<span class="dot"></span></h2>
+</footer>
+
+<!-- Tweaks panel -->
+<div class="tweaks" id="tweaks">
+  <h4>Tweaks <span style="font-size:10px;color:var(--ink-mute);letter-spacing:0.15em">LIVE</span></h4>
+  <div class="row">
+    <span style="color:var(--ink-dim)">Accent</span>
+    <input type="color" id="tw-accent" value="#D4A574">
+  </div>
+  <div class="row">
+    <span style="color:var(--ink-dim)">Hero treatment</span>
+    <select id="tw-hero">
+      <option value="default">Cinematic (default)</option>
+      <option value="minimal">Minimal overlay</option>
+      <option value="heavy">Heavy darken</option>
+    </select>
+  </div>
+  <div class="row">
+    <span style="color:var(--ink-dim)">Headline style</span>
+    <select id="tw-headline">
+      <option value="serif">Serif italic</option>
+      <option value="serif-bold">Serif bold</option>
+      <option value="sans">Sans-serif tight</option>
+    </select>
+  </div>
+  <div class="row">
+    <span style="color:var(--ink-dim)">Tab style</span>
+    <select id="tw-tab">
+      <option value="pill">Pill (default)</option>
+      <option value="underline">Underline</option>
+    </select>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="finance.js"></script>
+<script>
+(function () {
+'use strict';
+
+/* ------------------------------------------------------------------ */
+/* State                                                                */
+/* ------------------------------------------------------------------ */
+var DEFAULTS = {
+  age: 30, fireAge: 50, monthlyExpense: 80000,
+  inflation: 6, returnRate: 12,
+  sip: 40000, stepUp: 10, existing: 1500000, sipDuration: 20,
+  nps: 6000, npsEquity: 75, annuityRate: 6,
+  epfBalance: 0, basicSalary: 50000, salaryGrowth: 8
+};
+
+var state;
+try { var _s = localStorage.getItem('pie.inputs'); state = _s ? Object.assign({}, DEFAULTS, JSON.parse(_s)) : Object.assign({}, DEFAULTS); }
+catch (e) { state = Object.assign({}, DEFAULTS); }
+
+var activeTab;
+try { activeTab = localStorage.getItem('pie.tab') || 'combined'; }
+catch (e) { activeTab = 'combined'; }
+
+/* ------------------------------------------------------------------ */
+/* Compute                                                              */
+/* ------------------------------------------------------------------ */
+function compute(s) {
+  var f = window.PieFmt;
+  var years = Math.max(1, s.fireAge - s.age);
+  var yearsToSixty = Math.max(1, 60 - s.age);
+
+  var sipCorpus = 0, m = s.sip, totalInvested = 0;
+  var mr = s.returnRate / 100 / 12;
+  for (var y = 0; y < years; y++) {
+    for (var mo = 0; mo < 12; mo++) { sipCorpus = (sipCorpus + m) * (1 + mr); totalInvested += m; }
+    m *= 1 + s.stepUp / 100;
+  }
+  var flatSIP = f.fvMonthlySIP(s.sip, s.returnRate / 100, years);
+  var stepUpBonus = sipCorpus - flatSIP;
+  var existingFV = f.fvLumpsum(s.existing, s.returnRate / 100, years);
+  var targetCorpus = f.fireCorpus(s.monthlyExpense, s.inflation / 100, years, 0.04);
+  var annualExpenseAtFire = s.monthlyExpense * 12 * Math.pow(1 + s.inflation / 100, years);
+  var nps = f.npsProjection(s.nps, yearsToSixty, s.npsEquity, s.annuityRate);
+  var r2 = mr, n2 = years * 12;
+  var requiredSIP = (r2 > 0 && n2 > 0)
+    ? targetCorpus / (((Math.pow(1 + r2, n2) - 1) / r2) * (1 + r2))
+    : targetCorpus / Math.max(n2, 1);
+
+  // SIP tab: independent duration, separate from FIRE timeline
+  var sipYears = Math.max(1, s.sipDuration);
+  var sipCorpusD = 0, mD = s.sip, totalInvestedD = 0;
+  for (var yD = 0; yD < sipYears; yD++) {
+    for (var moD = 0; moD < 12; moD++) { sipCorpusD = (sipCorpusD + mD) * (1 + mr); totalInvestedD += mD; }
+    mD *= 1 + s.stepUp / 100;
+  }
+  var existingFVD = f.fvLumpsum(s.existing, s.returnRate / 100, sipYears);
+  var flatSIPD = f.fvMonthlySIP(s.sip, s.returnRate / 100, sipYears);
+  var stepUpBonusD = sipCorpusD - flatSIPD;
+
+  // EPF computation: employee 12% + employer 3.67% of basic, 8.25% interest compounded monthly
+  var epfYears = Math.max(1, s.fireAge - s.age);
+  var epfCorpus = s.epfBalance, basicM = s.basicSalary;
+  var totalEmpContrib = 0, totalErContrib = 0;
+  var epfMR = 0.0825 / 12;
+  for (var ey = 0; ey < epfYears; ey++) {
+    for (var emo = 0; emo < 12; emo++) {
+      var empC = basicM * 0.12;
+      var erC = basicM * 0.0367;
+      epfCorpus = (epfCorpus + empC + erC) * (1 + epfMR);
+      totalEmpContrib += empC;
+      totalErContrib += erC;
+    }
+    basicM *= 1 + s.salaryGrowth / 100;
+  }
+  var totalEPFInterest = epfCorpus - s.epfBalance - totalEmpContrib - totalErContrib;
+  var epfFinalBasic = basicM; // basicM after last salary increment = final year basic
+
+  return { sipCorpus: sipCorpus, totalInvested: totalInvested, stepUpBonus: stepUpBonus,
+    existingFV: existingFV, targetCorpus: targetCorpus, annualExpenseAtFire: annualExpenseAtFire,
+    nps: nps, requiredSIP: requiredSIP,
+    sipCorpusD: sipCorpusD, totalInvestedD: totalInvestedD, stepUpBonusD: stepUpBonusD, existingFVD: existingFVD,
+    epfCorpus: epfCorpus, totalEmpContrib: totalEmpContrib, totalErContrib: totalErContrib, totalEPFInterest: totalEPFInterest, epfFinalBasic: epfFinalBasic };
+}
+
+/* ------------------------------------------------------------------ */
+/* Shorthand parser  "50L" "1.2cr" "₹40,000" "35%"                    */
+/* ------------------------------------------------------------------ */
+function parseShorthand(str) {
+  if (!str) return NaN;
+  var s = str.trim().toLowerCase().replace(/[₹,\s]/g, '');
+  if (!s) return NaN;
+  var mult = 1;
+  if (s.endsWith('cr'))       { mult = 1e7; s = s.slice(0, -2); }
+  else if (s.endsWith('l'))   { mult = 1e5; s = s.slice(0, -1); }
+  else if (s.endsWith('k'))   { mult = 1e3; s = s.slice(0, -1); }
+  else if (s.endsWith('%'))   { s = s.slice(0, -1); }
+  else if (s.endsWith('yrs')) { s = s.slice(0, -3); }
+  else if (s.endsWith('yr'))  { s = s.slice(0, -2); }
+  var n = parseFloat(s);
+  return isNaN(n) ? NaN : n * mult;
+}
+
+/* ------------------------------------------------------------------ */
+/* Slider factory                                                       */
+/* ------------------------------------------------------------------ */
+function createSlider(cfg) {
+  var label = cfg.label, help = cfg.help, min = cfg.min, max = cfg.max;
+  var step = cfg.step || 1, format = cfg.format, suffix = cfg.suffix;
+  var ticks = cfg.ticks, readonly = cfg.readonly || false;
+  var current = cfg.value;
+  var isDragging = false, isEditing = false;
+
+  var row = document.createElement('div');
+  row.className = 'slider-row';
+
+  /* label side */
+  var left = document.createElement('div');
+  var lblEl = document.createElement('div');
+  lblEl.className = 'slider-label';
+  lblEl.textContent = label;
+  left.appendChild(lblEl);
+  if (help) {
+    var hlpEl = document.createElement('div');
+    hlpEl.className = 'slider-help';
+    hlpEl.textContent = help;
+    left.appendChild(hlpEl);
+  }
+
+  /* value display */
+  var valueWrap = document.createElement('div');
+  valueWrap.className = 'slider-value';
+  var dispSpan = document.createElement('span');
+  valueWrap.appendChild(dispSpan);
+  var unitEl = null;
+  if (suffix) {
+    unitEl = document.createElement('span');
+    unitEl.className = 'unit';
+    unitEl.textContent = suffix;
+    valueWrap.appendChild(unitEl);
+  }
+  var editInput = document.createElement('input');
+  editInput.type = 'text';
+  editInput.className = 'slider-input';
+  editInput.spellcheck = false;
+  editInput.style.display = 'none';
+  valueWrap.appendChild(editInput);
+
+  /* track */
+  var trackWrap = document.createElement('div');
+  trackWrap.className = 'slider-track-wrap';
+  var track = document.createElement('div');
+  track.className = 'slider-track';
+  var fillEl = document.createElement('div');
+  fillEl.className = 'slider-fill';
+  var thumbEl = document.createElement('div');
+  thumbEl.className = 'slider-thumb';
+  track.appendChild(fillEl);
+  track.appendChild(thumbEl);
+  trackWrap.appendChild(track);
+
+  if (ticks) {
+    var ticksEl = document.createElement('div');
+    ticksEl.className = 'slider-ticks';
+    ticks.forEach(function(t) {
+      var sp = document.createElement('span');
+      sp.textContent = t;
+      ticksEl.appendChild(sp);
+    });
+    trackWrap.appendChild(ticksEl);
+  }
+
+  row.appendChild(left);
+  row.appendChild(valueWrap);
+  row.appendChild(trackWrap);
+
+  function pct() { return Math.max(0, Math.min(1, (current - min) / (max - min))); }
+
+  function refresh() {
+    fillEl.style.width = (pct() * 100) + '%';
+    thumbEl.style.left = (pct() * 100) + '%';
+    if (!isEditing) {
+      dispSpan.textContent = format ? format(current) : String(current);
+    }
+  }
+
+  function clampVal(v) {
+    if (step) v = Math.round(v / step) * step;
+    return Math.max(min, Math.min(max, v));
+  }
+
+  function setValue(v, notify) {
+    var c = clampVal(v);
+    current = c;
+    refresh();
+    if (notify !== false && cfg.onChange) cfg.onChange(c);
+  }
+
+  if (!readonly) {
+    valueWrap.style.cursor = 'text';
+
+    valueWrap.addEventListener('click', function() {
+      if (isEditing || isDragging) return;
+      isEditing = true;
+      valueWrap.classList.add('editing');
+      dispSpan.style.display = 'none';
+      if (unitEl) unitEl.style.display = 'none';
+      editInput.style.display = '';
+      editInput.value = String(current);
+      requestAnimationFrame(function() { editInput.focus(); editInput.select(); });
+    });
+
+    function closeEdit(commit) {
+      if (commit) {
+        var n = parseShorthand(editInput.value);
+        if (!isNaN(n)) setValue(n);
+      }
+      isEditing = false;
+      valueWrap.classList.remove('editing');
+      editInput.style.display = 'none';
+      dispSpan.style.display = '';
+      if (unitEl) unitEl.style.display = '';
+      refresh();
+    }
+
+    editInput.addEventListener('blur', function() { closeEdit(true); });
+    editInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); editInput.blur(); }
+      else if (e.key === 'Escape') { closeEdit(false); }
+      else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        var n = parseShorthand(editInput.value);
+        if (!isNaN(n)) editInput.value = String(clampVal(n + step));
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        var n = parseShorthand(editInput.value);
+        if (!isNaN(n)) editInput.value = String(clampVal(n - step));
+      }
+    });
+
+    function setFromX(clientX) {
+      var rect = track.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      setValue(min + p * (max - min));
+    }
+
+    track.addEventListener('mousedown', function(e) {
+      if (isEditing) return;
+      isDragging = true;
+      setFromX(e.clientX);
+      e.preventDefault();
+    });
+    track.addEventListener('touchstart', function(e) {
+      if (isEditing) return;
+      isDragging = true;
+      setFromX(e.touches[0].clientX);
+    }, { passive: true });
+
+    function onMove(e) {
+      if (!isDragging) return;
+      setFromX(e.touches ? e.touches[0].clientX : e.clientX);
+    }
+    function onUp() { isDragging = false; }
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchmove', onMove, { passive: true });
+    window.addEventListener('touchend', onUp);
+  }
+
+  /* external sync without firing onChange */
+  row._set = function(v) { current = v; refresh(); };
+
+  refresh();
+  return row;
+}
+
+/* ------------------------------------------------------------------ */
+/* SVG helpers                                                          */
+/* ------------------------------------------------------------------ */
+function radialGaugeSVG(pct) {
+  var R = 90, C = 2 * Math.PI * R;
+  var p = Math.max(0, Math.min(100, pct));
+  var offset = C * (1 - p / 100);
+  var ticks = [0, 25, 50, 75].map(function(t) {
+    var a = (t / 100) * Math.PI * 2 - Math.PI / 2;
+    var x = (100 + Math.cos(a) * (R + 10)).toFixed(1);
+    var y = (100 + Math.sin(a) * (R + 10)).toFixed(1);
+    return '<circle cx="' + x + '" cy="' + y + '" r="1" fill="rgba(245,240,232,0.3)"/>';
+  }).join('');
+  return '<svg width="200" height="200" viewBox="0 0 200 200">'
+    + '<defs>'
+    + '<linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">'
+    + '<stop offset="0%" stop-color="#A47846"/><stop offset="100%" stop-color="#E9C99A"/>'
+    + '</linearGradient>'
+    + '<filter id="gw"><feGaussianBlur stdDeviation="3" result="b"/>'
+    + '<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+    + '</defs>'
+    + '<circle cx="100" cy="100" r="' + R + '" fill="none" stroke="rgba(245,240,232,0.08)" stroke-width="2"/>'
+    + '<circle cx="100" cy="100" r="' + R + '" fill="none" stroke="url(#gg)" stroke-width="2.5"'
+    + ' stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + offset.toFixed(2) + '"'
+    + ' stroke-linecap="round" filter="url(#gw)" transform="rotate(-90 100 100)"'
+    + ' style="transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)"/>'
+    + ticks
+    + '</svg>';
+}
+
+function growthChartHTML(years, sip, stepUp, rate, existing) {
+  var data = [], invested = existing, corpus = existing, m = sip;
+  for (var y = 0; y <= years; y++) {
+    data.push({ y: y, corpus: corpus, invested: invested });
+    var mr = rate / 12;
+    for (var mo = 0; mo < 12; mo++) { corpus = corpus * (1 + mr) + m; invested += m; }
+    m *= 1 + stepUp / 100;
+  }
+  var maxY = Math.max.apply(null, data.map(function(d) { return d.corpus; }));
+  var W = 800, H = 240, PT = 16, PB = 28;
+  function xf(i) { return ((i / years) * W).toFixed(1); }
+  function yf(v) { return (PT + (1 - v / maxY) * (H - PT - PB)).toFixed(1); }
+  var pC = data.map(function(d, i) { return (i === 0 ? 'M' : 'L') + ' ' + xf(i) + ' ' + yf(d.corpus); }).join(' ');
+  var pI = data.map(function(d, i) { return (i === 0 ? 'M' : 'L') + ' ' + xf(i) + ' ' + yf(d.invested); }).join(' ');
+  var aC = pC + ' L ' + xf(years) + ' ' + (H - PB) + ' L 0 ' + (H - PB) + ' Z';
+  var lastPt = data[data.length - 1];
+  var gridLines = [0.25, 0.5, 0.75].map(function(g) {
+    var gy = (PT + g * (H - PT - PB)).toFixed(1);
+    return '<line x1="0" x2="' + W + '" y1="' + gy + '" y2="' + gy + '" stroke="rgba(245,240,232,0.05)" stroke-dasharray="2 4"/>';
+  }).join('');
+  var tickYears = [0, Math.floor(years / 2), years];
+  var yearLabels = tickYears.map(function(ty) {
+    var anchor = ty === 0 ? 'start' : ty === years ? 'end' : 'middle';
+    return '<text x="' + xf(ty) + '" y="' + (H - 8) + '" font-size="10" font-family="JetBrains Mono,monospace"'
+      + ' fill="rgba(245,240,232,0.4)" letter-spacing="1.5" text-anchor="' + anchor + '">YR ' + ty + '</text>';
+  }).join('');
+  return '<div class="chart">'
+    + '<div class="eyebrow" style="margin-bottom:14px">Wealth timeline</div>'
+    + '<svg viewBox="0 0 ' + W + ' ' + H + '" style="display:block;width:100%;height:auto;overflow:visible">'
+    + '<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0%" stop-color="rgba(212,165,116,0.25)"/>'
+    + '<stop offset="100%" stop-color="rgba(212,165,116,0)"/>'
+    + '</linearGradient></defs>'
+    + gridLines
+    + '<path d="' + aC + '" fill="url(#ag)"/>'
+    + '<path d="' + pI + '" fill="none" stroke="rgba(245,240,232,0.25)" stroke-width="1.5" stroke-dasharray="3 4"/>'
+    + '<path d="' + pC + '" fill="none" stroke="#D4A574" stroke-width="2"/>'
+    + '<circle cx="' + xf(years) + '" cy="' + yf(lastPt.corpus) + '" r="4" fill="#D4A574"/>'
+    + '<circle cx="' + xf(years) + '" cy="' + yf(lastPt.corpus) + '" r="10" fill="#D4A574" opacity="0.2"/>'
+    + yearLabels
+    + '</svg>'
+    + '<div class="chart-legend">'
+    + '<div class="item"><div class="swatch" style="background:#D4A574;height:2px;width:14px;display:inline-block;margin-right:8px"></div>Corpus</div>'
+    + '<div class="item"><div class="swatch" style="background:rgba(245,240,232,0.25);height:2px;width:14px;display:inline-block;margin-right:8px;border-top:1px dashed rgba(245,240,232,0.5)"></div>Invested</div>'
+    + '</div></div>';
+}
+
+function stackHTML(total, segments, showLegend) {
+  var f = window.PieFmt;
+  var segs = segments.map(function(s) {
+    var flex = Math.max(0.0001, s.val);
+    var lbl = (s.val / total) >= 0.12 ? s.label : '';
+    return '<div class="stack-seg" style="flex:' + flex + ';background:' + s.color + '">' + lbl + '</div>';
+  }).join('');
+  var legend = '';
+  if (showLegend) {
+    legend = '<div class="stack-legend">'
+      + segments.map(function(s) {
+          return '<div class="item"><div class="k"><span class="dot" style="background:' + s.color + '"></span>' + s.label + '</div>'
+            + '<div class="v">₹' + f.formatINR(s.val) + '</div></div>';
+        }).join('')
+      + '</div>';
+  }
+  return '<div class="stack">' + segs + '</div>' + legend;
+}
+
+/* ------------------------------------------------------------------ */
+/* Result renderers (innerHTML into rightCard)                          */
+/* ------------------------------------------------------------------ */
+function renderFIREResults(el, s, r) {
+  var f = window.PieFmt;
+  var safe = r.targetCorpus * 0.04 / 12;
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">Corpus required at ' + s.fireAge + '</div>'
+    + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.targetCorpus) + '</div>'
+    + '<div class="sub">That\'s the inflation-adjusted nest egg to generate ₹' + f.formatINR(r.annualExpenseAtFire / 12)
+    + '/mo forever at a 4% safe withdrawal rate — your number to stop trading time for money.</div>'
+    + '</div>'
+    + '<div class="result-grid">'
+    + '<div class="result-cell"><div class="k">Years to freedom</div><div class="v">' + (s.fireAge - s.age) + '<span class="unit">yrs</span></div><div class="d">From age ' + s.age + '</div></div>'
+    + '<div class="result-cell"><div class="k">Monthly need</div><div class="v">₹' + f.formatINR(r.annualExpenseAtFire / 12) + '</div><div class="d">At ' + s.inflation + '% inflation</div></div>'
+    + '<div class="result-cell"><div class="k">SIP to hit this</div><div class="v">₹' + f.formatINR(r.requiredSIP) + '</div><div class="d">Monthly, alone</div></div>'
+    + '</div>'
+    + '<div style="padding:28px 0 4px">'
+    + '<div class="eyebrow" style="margin-bottom:12px">Safe monthly withdrawal at FIRE</div>'
+    + '<div style="font-family:var(--serif);font-size:36px;letter-spacing:-0.01em">'
+    + '<span style="color:var(--gold);font-style:italic">₹</span>' + f.formatINR(safe)
+    + '<span style="font-family:var(--sans);font-size:13px;color:var(--ink-mute);margin-left:10px;letter-spacing:0.1em;text-transform:uppercase">per month, forever</span>'
+    + '</div></div>';
+}
+
+function renderSIPResults(el, s, r) {
+  var f = window.PieFmt;
+  var total = r.sipCorpusD + r.existingFVD;
+  var gained = total - r.totalInvestedD - s.existing;
+  var mult = (r.sipCorpusD / Math.max(r.totalInvestedD, 1)).toFixed(1);
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">Projected corpus in ' + s.sipDuration + ' years</div>'
+    + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(total) + '</div>'
+    + '<div class="sub">₹' + f.formatINR(s.sip) + '/mo SIP with ' + s.stepUp + '% annual step-up, compounded at '
+    + s.returnRate + '% over ' + s.sipDuration + ' years. Step-ups alone add ~₹' + f.formatINR(r.stepUpBonusD) + ' to your corpus.</div>'
+    + '</div>'
+    + '<div class="result-grid">'
+    + '<div class="result-cell"><div class="k">Total invested</div><div class="v">₹' + f.formatINR(r.totalInvestedD) + '</div><div class="d">Your contribution</div></div>'
+    + '<div class="result-cell"><div class="k">Wealth gained</div><div class="v">₹' + f.formatINR(gained) + '</div><div class="d">The compounding</div></div>'
+    + '<div class="result-cell"><div class="k">Multiplier</div><div class="v">' + mult + '<span class="unit">x</span></div><div class="d">On invested capital</div></div>'
+    + '</div>'
+    + growthChartHTML(s.sipDuration, s.sip, s.stepUp, s.returnRate / 100, s.existing);
+}
+
+function renderNPSResults(el, s, r) {
+  var f = window.PieFmt;
+  var invested = s.nps * 12 * Math.max(1, 60 - s.age);
+  var compounded = Math.max(0, r.nps.corpus - invested);
+  var taxSaved = f.formatINR(Math.min(s.nps * 12, 50000) * 0.3);
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">NPS corpus at 60</div>'
+    + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.nps.corpus) + '</div>'
+    + '<div class="sub">60% withdrawable as lumpsum, 40% mandatory annuity. Plus an extra ₹50,000/yr tax deduction under 80CCD(1B) on top of 80C — effectively a ~30% return in year one.</div>'
+    + '</div>'
+    + '<div class="result-grid">'
+    + '<div class="result-cell"><div class="k">Tax-free lumpsum</div><div class="v">₹' + f.formatINR(r.nps.lumpsum) + '</div><div class="d">60% at age 60</div></div>'
+    + '<div class="result-cell"><div class="k">Monthly pension</div><div class="v">₹' + f.formatINR(r.nps.monthlyPension) + '</div><div class="d">From annuity</div></div>'
+    + '<div class="result-cell"><div class="k">Tax saved / yr</div><div class="v">₹' + taxSaved + '</div><div class="d">At 30% slab</div></div>'
+    + '</div>'
+    + '<div style="padding:28px 0 4px">'
+    + '<div class="eyebrow" style="margin-bottom:14px">Contribution vs. growth</div>'
+    + stackHTML(r.nps.corpus, [
+        { label: 'Invested', val: invested, color: '#8A7A66' },
+        { label: 'Compounded', val: compounded, color: '#D4A574' }
+      ], false)
+    + '</div>';
+}
+
+function renderEPFResults(el, s, r) {
+  var f = window.PieFmt;
+  var years = Math.max(1, s.fireAge - s.age);
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">EPF corpus at retirement age ' + s.fireAge + '</div>'
+    + '<div class="number"><span class="rupee">₹</span>' + f.formatINR(r.epfCorpus) + '</div>'
+    + '<div class="sub">Employee 12% + employer 3.67% of basic, compounded monthly at 8.25%. '
+    + 'With ' + s.salaryGrowth.toFixed(1) + '% annual step-up, basic grows from ₹' + f.formatINR(s.basicSalary) + ' to ₹' + f.formatINR(r.epfFinalBasic) + '/mo — and EPF contributions grow with it every year.</div>'
+    + '</div>'
+    + '<div class="result-grid">'
+    + '<div class="result-cell"><div class="k">Your contribution</div><div class="v">₹' + f.formatINR(r.totalEmpContrib) + '</div><div class="d">12% of basic, growing</div></div>'
+    + '<div class="result-cell"><div class="k">Employer contribution</div><div class="v">₹' + f.formatINR(r.totalErContrib) + '</div><div class="d">3.67% of basic, growing</div></div>'
+    + '<div class="result-cell"><div class="k">Interest earned</div><div class="v">₹' + f.formatINR(r.totalEPFInterest) + '</div><div class="d">At 8.25% p.a.</div></div>'
+    + '</div>'
+    + '<div style="padding:28px 0 4px">'
+    + '<div class="eyebrow" style="margin-bottom:14px">Contribution vs. growth</div>'
+    + stackHTML(r.epfCorpus, [
+        { label: 'Employee', val: r.totalEmpContrib + s.epfBalance, color: '#5C8A7A' },
+        { label: 'Employer', val: r.totalErContrib, color: '#3D6B5C' },
+        { label: 'Interest', val: Math.max(0, r.totalEPFInterest), color: '#D4A574' }
+      ], false)
+    + '</div>';
+}
+
+function renderCombinedResults(el, s, r) {
+  var f = window.PieFmt;
+  var total = r.sipCorpus + r.existingFV + r.nps.lumpsum + r.epfCorpus;
+  var gap = Math.max(0, r.targetCorpus - total);
+  var pct = Math.min(100, (total / r.targetCorpus) * 100);
+  var surplus = total - r.targetCorpus;
+
+  function gapSIP(g, ret, yrs) {
+    var m = ret / 100 / 12, n = yrs * 12;
+    if (m === 0) return g / Math.max(n, 1);
+    return g / (((Math.pow(1 + m, n) - 1) / m) * (1 + m));
+  }
+
+  var gapSIPAmt = gap > 0 ? gapSIP(gap, s.returnRate, s.fireAge - s.age) : 0;
+  var statusMsg = pct >= 100
+    ? 'You\'ll overshoot by <b style="color:var(--gold)">₹' + f.formatINR(surplus) + '</b>. Consider retiring earlier.'
+    : '<b style="color:var(--ink)">₹' + f.formatINR(gap) + '</b> more needed. Increase SIP or extend timeline.';
+
+  var gapBlock = gap > 0
+    ? '<div><div style="font-family:var(--serif);font-size:40px;letter-spacing:-0.02em">+₹' + f.formatINR(gapSIPAmt) + '</div>'
+      + '<div style="font-size:12px;color:var(--ink-mute);letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">Extra monthly SIP needed</div></div>'
+    : '';
+
+  el.innerHTML = ''
+    + '<div class="result-hero">'
+    + '<div class="label">Progress toward your FIRE number</div>'
+    + '<div class="radial-wrap">'
+    + radialGaugeSVG(pct)
+    + '<div class="labels">'
+    + '<div class="pct">' + pct.toFixed(1) + '<span style="font-size:28px;color:var(--ink-mute)">%</span></div>'
+    + '<div class="status">' + statusMsg + '</div>'
+    + '</div></div></div>'
+    + '<div style="padding:28px 0 4px">'
+    + '<div class="eyebrow" style="margin-bottom:14px">How you get there</div>'
+    + stackHTML(Math.max(r.targetCorpus, 1), [
+        { label: 'SIP', val: r.sipCorpus + r.existingFV, color: '#D4A574' },
+        { label: 'NPS', val: r.nps.lumpsum, color: '#6B4F32' },
+        { label: 'EPF', val: r.epfCorpus, color: '#5C8A7A' }
+      ].concat(gap > 0 ? [{ label: 'Gap', val: gap, color: 'rgba(245,240,232,0.08)' }] : []), true)
+    + '</div>'
+    + '<div style="padding:28px 0 0;border-top:1px solid var(--line);margin-top:24px">'
+    + '<div class="eyebrow" style="margin-bottom:14px">Gap analysis</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">'
+    + '<div><div style="font-family:var(--serif);font-size:40px;letter-spacing:-0.02em;color:' + (gap > 0 ? 'var(--ink)' : 'var(--gold)') + '">'
+    + (gap > 0 ? '₹' + f.formatINR(gap) : 'Covered') + '</div>'
+    + '<div style="font-size:12px;color:var(--ink-mute);letter-spacing:0.15em;text-transform:uppercase;margin-top:6px">'
+    + (gap > 0 ? 'Shortfall at target age' : "You're past the number") + '</div></div>'
+    + gapBlock
+    + '</div></div>';
+}
+
+/* ------------------------------------------------------------------ */
+/* Panel builders (left card)                                           */
+/* ------------------------------------------------------------------ */
+var leftCard, rightCard;
+var activeSliderMap = {};
+
+function addSlider(key, cfg) {
+  var el = createSlider(Object.assign({}, cfg, {
+    onChange: function(v) {
+      state[key] = v;
+      /* keep fireAge > age */
+      if (key === 'age' && state.fireAge <= v) {
+        state.fireAge = v + 1;
+        if (activeSliderMap['fireAge']) activeSliderMap['fireAge']._set(state.fireAge);
+      }
+      /* sync derived years-to-60 display */
+      if (key === 'age' && activeSliderMap['yearsTo60']) {
+        activeSliderMap['yearsTo60']._set(Math.max(1, 60 - v));
+      }
+      localStorage.setItem('pie.inputs', JSON.stringify(state));
+      updateResults();
+    }
+  }));
+  activeSliderMap[key] = el;
+  leftCard.appendChild(el);
+  return el;
+}
+
+function buildLeftPanel(tab) {
+  activeSliderMap = {};
+  leftCard.innerHTML = '';
+
+  function head(title, badge) {
+    var h = document.createElement('div');
+    h.className = 'panel-head';
+    h.innerHTML = '<h3>' + title + '</h3><span class="badge">' + badge + '</span>';
+    leftCard.appendChild(h);
+  }
+
+  if (tab === 'fire') {
+    head('Your FIRE plan', '4% rule');
+    addSlider('age',           { label: 'Current age',              value: state.age,           min: 22,  max: 55,      step: 1,   format: function(v) { return v; },              suffix: 'yrs', ticks: ['22','30','38','55'] });
+    addSlider('fireAge',       { label: 'Target retirement age',   help: 'When you want financial independence', value: state.fireAge, min: 30, max: 70, step: 1, format: function(v) { return v; }, suffix: 'yrs' });
+    addSlider('monthlyExpense',{ label: 'Monthly expense today',   help: 'Your current lifestyle cost', value: state.monthlyExpense, min: 10000, max: 500000, step: 5000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('inflation',     { label: 'Inflation',               value: state.inflation,     min: 2,   max: 12,      step: 0.5, format: function(v) { return v.toFixed(1); },   suffix: '%' });
+    addSlider('returnRate',    { label: 'Expected portfolio return', value: state.returnRate,  min: 6,   max: 20,      step: 0.5, format: function(v) { return v.toFixed(1); },   suffix: '%' });
+  }
+
+  if (tab === 'sip') {
+    head('SIP contribution', 'Equity MF');
+    addSlider('sip',         { label: 'Monthly SIP amount',      help: 'Systematic investment in equity mutual funds', value: state.sip,         min: 500, max: 200000,   step: 500,   format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('stepUp',      { label: 'Annual step-up',          help: 'Increase your SIP as your income grows',      value: state.stepUp,      min: 0,   max: 25,       step: 1,     format: function(v) { return v; },            suffix: '%' });
+    addSlider('sipDuration', { label: 'Investment duration',                                                           value: state.sipDuration, min: 1,   max: 40,       step: 1,     format: function(v) { return v; },            suffix: 'yrs', ticks: ['1','10','20','30','40'] });
+    addSlider('existing',    { label: 'Existing investments',                                                          value: state.existing,    min: 0,   max: 20000000, step: 50000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('returnRate',  { label: 'Equity return (CAGR)',                                                          value: state.returnRate,  min: 6,   max: 20,       step: 0.5,   format: function(v) { return v.toFixed(1); }, suffix: '%' });
+  }
+
+  if (tab === 'nps') {
+    head('NPS contribution', '80CCD(1B)');
+    addSlider('age',        { label: 'Current age',       help: 'Used to calculate years left to contribute',   value: state.age,        min: 22,  max: 59,     step: 1,    format: function(v) { return v; },            suffix: 'yrs', ticks: ['22','30','40','59'] });
+    addSlider('nps',        { label: 'Monthly NPS',       help: 'Tier 1, auto choice',                          value: state.nps,        min: 500, max: 100000, step: 500,  format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('npsEquity',  { label: 'Equity allocation', help: 'Rest goes into corporate bonds & G-sec',       value: state.npsEquity,  min: 0,   max: 75,     step: 5,    format: function(v) { return v; },            suffix: '%' });
+    addSlider('annuityRate',{ label: 'Annuity rate',      help: 'Conservative pension from 40% annuity corpus', value: state.annuityRate,min: 3,   max: 9,      step: 0.5,  format: function(v) { return v.toFixed(1); }, suffix: '%' });
+    var yrsEl = createSlider({ label: 'Years to age 60', value: Math.max(1, 60 - state.age), min: 1, max: 38, step: 1, format: function(v) { return v; }, suffix: 'yrs', readonly: true });
+    activeSliderMap['yearsTo60'] = yrsEl;
+    leftCard.appendChild(yrsEl);
+  }
+
+  if (tab === 'epf') {
+    head('EPF contribution', '8.25% p.a.');
+    addSlider('age',          { label: 'Current age',             help: 'Synced with FIRE tab',           value: state.age,          min: 22,  max: 55,       step: 1,     format: function(v) { return v; },            suffix: 'yrs', ticks: ['22','30','40','55'] });
+    addSlider('fireAge',      { label: 'Retirement age',          help: 'When contributions stop',        value: state.fireAge,      min: 30,  max: 70,       step: 1,     format: function(v) { return v; },            suffix: 'yrs' });
+    addSlider('epfBalance',   { label: 'Current EPF balance',     help: 'Check your UAN passbook',        value: state.epfBalance,   min: 0,   max: 5000000,  step: 10000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('basicSalary',  { label: 'Monthly basic salary',    help: 'EPF is calculated on basic pay', value: state.basicSalary,  min: 10000, max: 500000, step: 1000,  format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('salaryGrowth', { label: 'Annual step-up',          help: 'Basic salary grows by this % each year, lifting EPF contributions proportionally', value: state.salaryGrowth, min: 0, max: 15, step: 0.5, format: function(v) { return v.toFixed(1); }, suffix: '%', ticks: ['0%','5%','10%','15%'] });
+  }
+
+  if (tab === 'combined') {
+    head('All three together', 'Unified');
+    addSlider('age',           { label: 'Current age',            value: state.age,           min: 22,  max: 55,      step: 1,   format: function(v) { return v; },            suffix: 'yrs', ticks: ['22','30','38','55'] });
+    addSlider('fireAge',       { label: 'Target retirement age', help: 'When you want financial independence', value: state.fireAge, min: 30, max: 70, step: 1, format: function(v) { return v; }, suffix: 'yrs' });
+    addSlider('monthlyExpense',{ label: 'Monthly expense today', help: 'Your current lifestyle cost', value: state.monthlyExpense, min: 10000, max: 500000, step: 5000, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('inflation',     { label: 'Inflation',             value: state.inflation,     min: 2,   max: 12,      step: 0.5, format: function(v) { return v.toFixed(1); }, suffix: '%' });
+    addSlider('returnRate',    { label: 'Expected portfolio return', value: state.returnRate,min: 6,   max: 20,      step: 0.5, format: function(v) { return v.toFixed(1); }, suffix: '%' });
+    addSlider('sip',           { label: 'Monthly SIP',           value: state.sip,           min: 500, max: 200000,  step: 500, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+    addSlider('nps',           { label: 'Monthly NPS',           value: state.nps,           min: 500, max: 100000,  step: 500, format: function(v) { return '₹' + window.PieFmt.formatINR(v); } });
+  }
+}
+
+function updateResults() {
+  var r = compute(state);
+  if (activeTab === 'fire')     renderFIREResults(rightCard, state, r);
+  else if (activeTab === 'sip') renderSIPResults(rightCard, state, r);
+  else if (activeTab === 'nps') renderNPSResults(rightCard, state, r);
+  else if (activeTab === 'epf') renderEPFResults(rightCard, state, r);
+  else                          renderCombinedResults(rightCard, state, r);
+}
+
+function setTab(tab) {
+  activeTab = tab;
+  localStorage.setItem('pie.tab', tab);
+  document.querySelectorAll('.tab[data-tab]').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  buildLeftPanel(tab);
+  updateResults();
+}
+
+/* ------------------------------------------------------------------ */
+/* Tweaks panel                                                         */
+/* ------------------------------------------------------------------ */
+function lighten(hex, amt) {
+  var c = hexRgb(hex);
+  return rgbHex(Math.min(255, c.r + (255 - c.r) * amt), Math.min(255, c.g + (255 - c.g) * amt), Math.min(255, c.b + (255 - c.b) * amt));
+}
+function darken(hex, amt) {
+  var c = hexRgb(hex);
+  return rgbHex(c.r * (1 - amt), c.g * (1 - amt), c.b * (1 - amt));
+}
+function hexRgb(hex) {
+  var n = parseInt(hex.replace('#', ''), 16);
+  return { r: n >> 16 & 255, g: n >> 8 & 255, b: n & 255 };
+}
+function rgbHex(r, g, b) {
+  var h = function(v) { return Math.round(v).toString(16).padStart(2, '0'); };
+  return '#' + h(r) + h(g) + h(b);
+}
+
+window.__pieTweaks = { accent: '#D4A574', heroTreatment: 'default', headlineStyle: 'serif', tabStyle: 'pill' };
+
+function applyTweaks(t) {
+  Object.assign(window.__pieTweaks, t);
+  var root = document.documentElement;
+  if (t.accent) {
+    root.style.setProperty('--gold', t.accent);
+    root.style.setProperty('--gold-hi', lighten(t.accent, 0.15));
+    root.style.setProperty('--gold-deep', darken(t.accent, 0.25));
+  }
+  if (t.heroTreatment) {
+    var v = document.querySelector('.hero-vignette');
+    v.style.opacity = t.heroTreatment === 'minimal' ? '0.55' : t.heroTreatment === 'heavy' ? '1.2' : '';
+  }
+  if (t.headlineStyle) {
+    [document.querySelector('.hero-headline'), document.querySelector('.calc-title')].forEach(function(el) {
+      if (!el) return;
+      if (t.headlineStyle === 'serif')      { el.style.fontFamily = 'var(--serif)'; el.style.fontWeight = '400'; el.style.letterSpacing = ''; }
+      if (t.headlineStyle === 'serif-bold') { el.style.fontFamily = 'var(--serif)'; el.style.fontWeight = '600'; el.style.letterSpacing = ''; }
+      if (t.headlineStyle === 'sans')       { el.style.fontFamily = 'var(--sans)';  el.style.fontWeight = '500'; el.style.letterSpacing = '-0.04em'; }
+    });
+  }
+  if (t.tabStyle) {
+    document.querySelectorAll('.tabs').forEach(function(el) {
+      if (t.tabStyle === 'underline') {
+        el.style.cssText = 'background:transparent;border:none;padding:0;gap:32px';
+        el.querySelectorAll('.tab').forEach(function(b) {
+          b.style.cssText = 'border-radius:0;background:transparent;padding:10px 0;'
+            + (b.classList.contains('active')
+              ? 'border-bottom:1px solid var(--gold);color:var(--ink)'
+              : 'border-bottom:1px solid transparent;color:var(--ink-dim)');
+        });
+      } else {
+        el.style.cssText = '';
+        el.querySelectorAll('.tab').forEach(function(b) { b.style.cssText = ''; });
+      }
+    });
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Init                                                                 */
+/* ------------------------------------------------------------------ */
+function init() {
+  var calcRoot = document.getElementById('calc-root');
+  var tabsRoot = document.getElementById('tabs-root');
+  if (!calcRoot) return;
+
+  /* tabs bar */
+  var tabsWrap = document.createElement('div');
+  tabsWrap.style.padding = '0 0 24px';
+  var tabsEl = document.createElement('div');
+  tabsEl.className = 'tabs';
+  [['fire','FIRE'],['sip','SIP'],['nps','NPS'],['epf','EPF'],['combined','Combined']].forEach(function(pair) {
+    var btn = document.createElement('button');
+    btn.className = 'tab' + (pair[0] === activeTab ? ' active' : '');
+    btn.dataset.tab = pair[0];
+    btn.textContent = pair[1];
+    btn.addEventListener('click', function() { setTab(pair[0]); });
+    tabsEl.appendChild(btn);
+  });
+  tabsWrap.appendChild(tabsEl);
+  if (tabsRoot) tabsRoot.appendChild(tabsWrap);
+
+  /* calc grid */
+  var grid = document.createElement('div');
+  grid.className = 'calc-grid';
+  leftCard  = document.createElement('div'); leftCard.className  = 'card';
+  rightCard = document.createElement('div'); rightCard.className = 'card card-hi';
+  grid.appendChild(leftCard);
+  grid.appendChild(rightCard);
+  calcRoot.appendChild(grid);
+
+  buildLeftPanel(activeTab);
+  updateResults();
+
+  /* tweaks wiring */
+  var tweaksEl = document.getElementById('tweaks');
+  document.getElementById('tw-accent').addEventListener('input',  function(e) { applyTweaks({ accent: e.target.value }); });
+  document.getElementById('tw-hero').addEventListener('change',   function(e) { applyTweaks({ heroTreatment: e.target.value }); });
+  document.getElementById('tw-headline').addEventListener('change',function(e) { applyTweaks({ headlineStyle: e.target.value }); });
+  document.getElementById('tw-tab').addEventListener('change',    function(e) { applyTweaks({ tabStyle: e.target.value }); });
+
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === '__activate_edit_mode')   tweaksEl.classList.add('open');
+    if (e.data && e.data.type === '__deactivate_edit_mode') tweaksEl.classList.remove('open');
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  /* parallax hero */
+  var heroImg = document.querySelector('.hero-image');
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    if (y < 900 && heroImg) heroImg.style.transform = 'translateY(' + (y * 0.2) + 'px) scale(' + (1 + y * 0.0002) + ')';
+  }, { passive: true });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+})();
+</script>
+</body>
+</html>
