@@ -295,9 +295,11 @@ html, body {
   padding: 0 64px 80px;
 }
 .hero-body > div {
+  position: relative;
   text-shadow: 0 2px 24px rgba(0,0,0,0.5);
   max-width: 720px;
 }
+.hero-eyebrow-scrim { display: none; }
 .hero-headline {
   font-family: var(--serif);
   font-weight: 400;
@@ -766,9 +768,17 @@ html, body {
         rgba(13,13,13,1)    76%);
   }
   .hero-body { padding: 0 20px 48px; }
-  .hero-body .eyebrow {
-    text-shadow: 0 1px 12px rgba(0,0,0,0.9), 0 2px 32px rgba(0,0,0,0.8);
+  .hero-eyebrow-scrim {
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    right: -24px;
+    height: 160px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+    z-index: 0;
   }
+  .hero-eyebrow-scrim ~ * { position: relative; z-index: 1; }
   .hero-headline { font-size: clamp(48px, 13vw, 80px); max-width: 100%; }
   .hero-sub { font-size: 14px; margin-top: 24px; }
   .hero-cta-row { margin-top: 32px; flex-wrap: wrap; }
@@ -841,7 +851,14 @@ html, body {
 
   .hiw-section { padding: 60px 0; }
   .hiw-label { padding: 0 24px; margin-bottom: 28px; }
-  .hiw-scroll { padding: 0 0 4px 24px; gap: 12px; }
+  .hiw-scroll {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 4px;
+    padding-left: 1.5rem;
+    scroll-padding-left: 1.5rem;
+    gap: 12px;
+  }
   .hiw-card { flex: 0 0 280px; padding: 28px 22px 32px; }
   .hiw-title { font-size: 22px; }
   .footer { padding: 60px 20px 0; }
